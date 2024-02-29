@@ -15,7 +15,7 @@
 </script>
 
 <section class="box container has-text-centered m-5">
-  <p class="is-size-5">{$view.count}</p>
+  <p class="is-size-5">{$view.text}</p>
   <div class="buttons section is-centered">
     <button
       class="button is-primary is-danger"
