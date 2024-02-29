@@ -1,0 +1,28 @@
+{
+  "name": "web-svelte",
+  "version": "0.0.1",
+  "type": "module",
+  "scripts": {
+    "wasm:build": "cd ../shared && wasm-pack build --target web",
+    "start": "npm run build && concurrently -k \"vite\" ",
+    "build": "pnpm run wasm:build && vite build",
+    "dev": "pnpm run wasm:build && vite",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "reflect-metadata": "^0.2.1",
+    "shared": "file:../shared/pkg",
+    "shared_types": "file:../shared_types/generated/typescript"
+  },
+  "devDependencies": {
+    "@parcel/config-default": "^2.12.0",
+    "@sveltejs/vite-plugin-svelte": "^3.0.2",
+    "bulma": "^0.9.4",
+    "concurrently": "^8.2.2",
+    "parcel": "^2.12.0",
+    "parcel-transformer-svelte": "^1.2.3",
+    "svelte": "^4.2.12",
+    "vite": "^5.1.4",
+    "wasm-pack": "^0.12.1"
+  }
+}

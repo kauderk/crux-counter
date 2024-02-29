@@ -3,3 +3,5 @@
 *.xcuserstate
 **/xcuserdata/*
 .bin
+node_modules
+.parcel-cache

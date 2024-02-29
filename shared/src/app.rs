@@ -31,6 +31,7 @@ pub struct ViewModel {
 pub enum Event {
     // events from the shell
     Get,
+		Reset,
     Increment,
     Decrement,
     StartWatch,
@@ -75,6 +76,13 @@ impl crux_core::App for App {
                 model.count = count;
                 caps.render.render();
             }
+						Event::Reset => {
+								model.count = Count {
+										value: 0,
+										updated_at: None,
+								};
+								caps.render.render();
+						}
             Event::Increment => {
                 // optimistic update
                 model.count = Count {
@@ -209,6 +217,27 @@ mod tests {
         "###);
     }
     // ANCHOR_END: simple_tests
+
+		/// Test that a `Reset` event causes the app to reset the counter
+		#[test]
+		fn reset_counter() {
+				// instantiate our app via the test harness, which gives us access to the model
+				let app = AppTester::<App, _>::default();
+				let mut model = Model {
+						count: Count {
+								value: 1,
+								updated_at: Some(Utc.with_ymd_and_hms(2022, 12, 31, 23, 59, 0).unwrap()),
+						},
+				};
+				let update = app.update(Event::Reset, &mut model);
+				assert_effect!(update, Effect::Render(_));
+				insta::assert_yaml_snapshot!(model, @r###"
+				---
+				count:
+					value: 0
+					updated_at: ~
+				"###);
+		}
 
     // Test that an `Increment` event causes the app to increment the counter
     #[test]
